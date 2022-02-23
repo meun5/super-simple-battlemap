@@ -16,6 +16,8 @@ var indexHTML embed.FS
 
 var staticFiles http.FileSystem = http.FS(staticFileEmbed)
 
-var t, _ = template.ParseFS(indexHTML, "templates/index.html.tmpl")
+func t() (*template.Template, error) {
+	return template.ParseFS(indexHTML, "templates/index.html.tmpl")
+}
 
 const MODE = "RELEASE"

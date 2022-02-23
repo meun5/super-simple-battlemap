@@ -9,6 +9,8 @@ import (
 
 var staticFiles http.FileSystem = http.Dir("./static")
 
-var t, _ = template.ParseFiles("templates/index.html.tmpl")
+func t() (*template.Template, error) {
+	return template.ParseFiles("templates/index.html.tmpl")
+}
 
 const MODE = "DEBUG"

@@ -24,6 +24,8 @@ func logRequestHandler(h http.Handler) http.Handler {
 }
 
 func main() {
+	log.Printf("STARTING IN %s", MODE)
+
 	fs := http.FileServer(staticFiles)
 
 	// Serve static files
@@ -31,6 +33,11 @@ func main() {
 
 	// Handle all other requests
 	http.HandleFunc("/", func(w http.ResponseWriter, req *http.Request) {
+		t, err := t()
+		if err != nil {
+			log.Fatal(err)
+		}
+
 		var path = req.URL.Path
 		log.Println("Serving request for path", path)
 		w.Header().Add("Content-Type", "text/html")
