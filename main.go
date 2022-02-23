@@ -37,10 +37,10 @@ func main() {
 
 		// respond with the output of template execution
 		t.Execute(w, struct {
-			Title    string
-			Response string
-			Version  string
-		}{Title: "OPE", Response: path, Version: BuildVersion})
+			Title   string
+			Version string
+			AppName string
+		}{Title: "OPE", AppName: ApplicationName, Version: BuildVersion})
 	})
 
 	log.Println("Listening on :3000...")
