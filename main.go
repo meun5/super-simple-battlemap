@@ -31,24 +31,7 @@ func main() {
 	// Serve static files
 	http.Handle("/static/", logRequestHandler(http.StripPrefix("/static", fs)))
 
-	// Handle all other requests
-	http.HandleFunc("/", func(w http.ResponseWriter, req *http.Request) {
-		t, err := t()
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		var path = req.URL.Path
-		log.Println("Serving request for path", path)
-		w.Header().Add("Content-Type", "text/html")
-
-		// respond with the output of template execution
-		t.Execute(w, struct {
-			Title   string
-			Version string
-			AppName string
-		}{Title: "OPE", AppName: ApplicationName, Version: BuildVersion})
-	})
+	routes()
 
 	log.Println("Listening on :3000...")
 

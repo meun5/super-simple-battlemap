@@ -3,14 +3,14 @@
 package main
 
 import (
+	"html/template"
 	"net/http"
-	"text/template"
 )
 
 var staticFiles http.FileSystem = http.Dir("./static")
 
 func t() (*template.Template, error) {
-	return template.ParseFiles("templates/index.html.tmpl")
+	return template.ParseGlob("templates/*.html.tmpl")
 }
 
 const MODE = "DEBUG"
