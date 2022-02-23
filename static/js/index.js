@@ -1,7 +1,9 @@
 (function () {
-    var AREA_HEIGHT = 640
-    var AREA_WIDTH = 1280
     var SQUARE_DIM = 64
+    var NUM_OF_SQUARES_TALL = 10
+    var NUM_OF_SQUARES_WIDE = 20
+    var AREA_HEIGHT = NUM_OF_SQUARES_TALL * SQUARE_DIM
+    var AREA_WIDTH = NUM_OF_SQUARES_WIDE * SQUARE_DIM
     var BORDER_WIDTH = 1
     var CANVAS_HEIGHT = BORDER_WIDTH * 2 + AREA_HEIGHT
     var CANVAS_WIDTH = BORDER_WIDTH * 2 + AREA_WIDTH
@@ -20,8 +22,8 @@
         backgroundColor: "#FFFFFF",
     };
 
-    var s = new Array(AREA_HEIGHT/SQUARE_DIM);
-    var t = new Array(AREA_HEIGHT/SQUARE_DIM);
+    var s = new Array(NUM_OF_SQUARES_TALL);
+    var t = new Array(NUM_OF_SQUARES_TALL);
 
     new Phaser.Game(config);
 
@@ -30,15 +32,13 @@
         var graphics = this.add.graphics({ lineStyle: { width: BORDER_WIDTH, color: 0x000000 }, fillStyle: { color: INACTIVE_COLOUR } });
 
         var yOffset = 1;
-        for (var y = 0; y < AREA_HEIGHT/SQUARE_DIM; y++) {
+        for (var y = 0; y < NUM_OF_SQUARES_TALL; y++) {
             var xOffset = 1;
 
-            s[y] = new Array(AREA_WIDTH/SQUARE_DIM);
-            t[y] = new Array(AREA_WIDTH/SQUARE_DIM);
+            s[y] = new Array(NUM_OF_SQUARES_WIDE);
+            t[y] = new Array(NUM_OF_SQUARES_WIDE);
 
-            for (var x = 0; x < AREA_WIDTH/SQUARE_DIM; x++) {
-                console.log(x, y, xOffset, yOffset, xOffset + SQUARE_DIM, yOffset + SQUARE_DIM);
-
+            for (var x = 0; x < NUM_OF_SQUARES_WIDE; x++) {
                 s[y][x] = {
                     active: false,
                     obj: new Phaser.Geom.Rectangle(xOffset, yOffset, SQUARE_DIM, SQUARE_DIM),
@@ -56,8 +56,8 @@
         }
 
         this.input.on('pointerup', function (p) {
-            for (var y = 0; y < AREA_HEIGHT/SQUARE_DIM; y++) {
-                for (var x = 0; x < AREA_WIDTH/SQUARE_DIM; x++) {
+            for (var y = 0; y < NUM_OF_SQUARES_TALL; y++) {
+                for (var x = 0; x < NUM_OF_SQUARES_WIDE; x++) {
                     if (Phaser.Geom.Rectangle.ContainsPoint(s[y][x].obj, p)) {
                         s[y][x].active = !s[y][x].active;
 
