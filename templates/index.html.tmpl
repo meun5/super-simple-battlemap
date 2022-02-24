@@ -2,12 +2,18 @@
 <html>
   <head>
     <title>{{.Title}}</title>
-    <link rel="stylesheet" href="static/css/main.css">
+    <link rel="stylesheet" href="/static/css/main.css">
   </head>
   <body>
     <small><pre>Powered by {{.AppName}} v{{.Version}}</pre></small>
-    <div id="map"></div>
-    <script src="//cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js" type="text/javascript"></script>
-    <script src="static/js/index.js" type="text/javascript"></script>
+    <div id="forms">
+      <form name="createGame" id="createGame" action="/new" method="post">
+        <input type="submit" name="createGame" value="Create New Game" />
+      </form>
+      <form name="joinGame" id="joinGame" action="/join" method="post">
+        <input type="text" name="joinId" required="required" />
+        <input type="submit" name="joinGame" value="Join a Game" />
+      </form>
+    </div>
   </body>
 </html>

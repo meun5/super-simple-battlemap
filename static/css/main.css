@@ -6,3 +6,14 @@ small > pre {
     margin-top: 0px;
     margin-bottom: 2px;
 }
+
+#width {
+    display: inline-block;
+    margin-right: 1rem;
+}
+
+#height {
+    vertical-align:top;
+    display: inline-block;
+    margin-right: 1rem;
+}

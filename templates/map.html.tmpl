@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{.Title}}</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+  </head>
+  <body>
+    <small><pre>Powered by {{.AppName}} v{{.Version}}</pre></small>
+    <div id="game">
+      <div id="controls">
+        <div id="width">
+          <p>Width: <span id="tileWidth"></span></p>
+          <button id="increaseWidth">+</button>
+          <button id="decreaseWidth">-</button>
+        </div>
+        <div id="height">
+          <p>Height: <span id="tileHeight"></span></p>
+          <button id="increaseHeight">+</button>
+          <button id="decreaseHeight">-</button>
+        </div>
+      </div>
+      <div id="map"></div>
+    </div>
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js" type="text/javascript"></script>
+    <script src="/static/js/map.js" type="text/javascript"></script>
+  </body>
+</html>

@@ -3,6 +3,8 @@ package main
 import "net/http"
 
 func routes() {
-	// Handle all other requests
 	http.HandleFunc("/", handleIndex)
+	http.HandleFunc("/new", handleNewGame)
+	http.HandleFunc("/join", handleJoinGame)
+	http.HandleFunc("/map", handleMap)
 }

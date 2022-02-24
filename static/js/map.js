@@ -8,8 +8,10 @@
     var CANVAS_HEIGHT = BORDER_WIDTH * 2 + AREA_HEIGHT
     var CANVAS_WIDTH = BORDER_WIDTH * 2 + AREA_WIDTH
 
-    var ACTIVE_COLOUR = 0xAAAAAA
-    var INACTIVE_COLOUR = 0xEEEEEE
+    var colours = {
+        ACTIVE_COLOUR: 0xAAAAAA,
+        INACTIVE_COLOUR: 0xEEEEEE,
+    }
 
     var config = {
         type: Phaser.AUTO,
@@ -29,7 +31,7 @@
 
     function create ()
     {
-        var graphics = this.add.graphics({ lineStyle: { width: BORDER_WIDTH, color: 0x000000 }, fillStyle: { color: INACTIVE_COLOUR } });
+        var graphics = this.add.graphics({ lineStyle: { width: BORDER_WIDTH, color: 0x000000 }, fillStyle: { color: colours.INACTIVE_COLOUR } });
 
         var yOffset = 1;
         for (var y = 0; y < NUM_OF_SQUARES_TALL; y++) {
@@ -56,29 +58,37 @@
         }
 
         this.input.on('pointerup', function (p) {
-            for (var y = 0; y < NUM_OF_SQUARES_TALL; y++) {
-                for (var x = 0; x < NUM_OF_SQUARES_WIDE; x++) {
-                    if (Phaser.Geom.Rectangle.ContainsPoint(s[y][x].obj, p)) {
-                        s[y][x].active = !s[y][x].active;
-
-                        if (s[y][x].active) {
-                            graphics.fillStyle(ACTIVE_COLOUR)
-                            graphics.fillRectShape(s[y][x].obj)
-                            graphics.strokeRectShape(s[y][x].obj)
-                            t[y][x].setColor('#FFF')
-
-                            break;
-                        }
-
-                        graphics.fillStyle(INACTIVE_COLOUR)
-                        graphics.fillRectShape(s[y][x].obj)
-                        graphics.strokeRectShape(s[y][x].obj)
-                        t[y][x].setColor('#000')
-
-                        break;
-                    }
-                }
+            var t = findTileClicked(p);
+            if (t == null) {
+                return
             }
+
+            t.tile.active = !t.tile.active;
+
+            var colour = t.tile.active ? colours.ACTIVE_COLOUR : colours.INACTIVE_COLOUR
+            var textColour = t.tile.active ? colours.INACTIVE_COLOUR : colours.ACTIVE_COLOUR
+
+            setTileColour(graphics, t.tile, colour);
+            t[t.y][t.x].setColor(textColour)
         })
     }
+
+    function findTileClicked(p) {
+        for (var y = 0; y < NUM_OF_SQUARES_TALL; y++) {
+            for (var x = 0; x < NUM_OF_SQUARES_WIDE; x++) {
+                if (Phaser.Geom.Rectangle.ContainsPoint(s[y][x].obj, p)) {
+                    return { tile: s[y][x], x: x, y: y };
+                }
+            }
+        }
+    }
+
+    function setTileColour(graphics, tile, colour) {
+        graphics.fillStyle(colour)
+        graphics.fillRectShape(tile.obj)
+        graphics.strokeRectShape(tile.obj)
+    }
+
+    document.getElementById("tileWidth").innerText = NUM_OF_SQUARES_WIDE.toString()
+    document.getElementById('tileHeight').innerText = NUM_OF_SQUARES_TALL.toString()
 })()
